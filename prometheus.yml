@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 4s
+  evaluation_interval: 4s
+
+remote_write:
+- url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server=micormeter-prometheus-springboot-poc
+  bearer_token: Your_API_Key here
+  
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'spring_micrometer_prometheus'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['192.168.0.249:8080']
+  - job_name: rabbitmq
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.0.249:15692']
+    
